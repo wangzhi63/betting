@@ -2,9 +2,15 @@ package com.jimmyatucla.betting.entities;
 
 // User.java
 import jakarta.persistence.*;
+
+
 import java.time.LocalDateTime;
 import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User {

@@ -5,6 +5,7 @@ import com.jimmyatucla.betting.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,11 @@ public class UserService {
     }
 
     public User save(User user) {
+        if(user.getId() == null) {
+            user.setCreatedAt(LocalDateTime.now());
+        }
+        user.setUpdatedAt(LocalDateTime.now());
+
         return userRepository.save(user);
     }
 
