@@ -23,13 +23,20 @@ public class UserService {
     }
 
     public User save(User user) {
-        if(user.getId() == null) {
-            user.setCreatedAt(LocalDateTime.now());
+        Optional<User> existingUserOptional = userRepository.findByEmail(user.getEmail());
+        if (existingUserOptional.isPresent()) {
+            // Update the existing user's properties
+            User existingUser = existingUserOptional.get();
+            existingUser.setUsername(user.getUsername());
+       
+            // Update other properties as needed
+            return userRepository.save(existingUser);
+        } else {
+            // Save the new user
+            return userRepository.save(user);
         }
-        user.setUpdatedAt(LocalDateTime.now());
-
-        return userRepository.save(user);
     }
+
 
     public void deleteById(Long id) {
         userRepository.deleteById(id);
