@@ -23,6 +23,9 @@ public class UserService {
     }
 
     public User save(User user) {
+        if(userRepository.findByEmail(user.getEmail()) != null) {
+            return user;
+        }
         if(user.getId() == null) {
             user.setCreatedAt(LocalDateTime.now());
         }
