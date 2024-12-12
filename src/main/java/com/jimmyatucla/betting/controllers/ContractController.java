@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/contracts")
+@RequestMapping("/api/contracts")
 public class ContractController {
 
     @Autowired
