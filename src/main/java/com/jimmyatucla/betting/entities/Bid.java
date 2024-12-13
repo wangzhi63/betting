@@ -20,12 +20,18 @@ public class Bid {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
+    @Column(name = "contract_id", nullable = false)
+    private Long contractId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "contract_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contract_id", insertable = false, updatable = false)
     private Contract contract;
 
     // Getters and Setters
