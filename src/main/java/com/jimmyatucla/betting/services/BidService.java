@@ -1,6 +1,8 @@
 package com.jimmyatucla.betting.services;
 
+import com.jimmyatucla.betting.dtos.BidDTO;
 import com.jimmyatucla.betting.entities.*;
+import com.jimmyatucla.betting.mappers.BidMapper;
 import com.jimmyatucla.betting.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,11 @@ public class BidService {
 
     public void deleteById(Long id) {
         bidRepository.deleteById(id);
+    }
+
+    public BidDTO createBid(BidDTO bidDTO) {
+        Bid bid = BidMapper.toEntity(bidDTO);
+        Bid savedBid = bidRepository.save(bid);
+        return BidMapper.toDTO(savedBid);
     }
 }
