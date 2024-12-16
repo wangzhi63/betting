@@ -3,6 +3,7 @@ package com.jimmyatucla.betting.controllers;
 
 
 import com.jimmyatucla.betting.dtos.ContractDTO;
+import com.jimmyatucla.betting.dtos.ContractWithBidsDTO;
 import com.jimmyatucla.betting.entities.Contract;
 import com.jimmyatucla.betting.services.ContractService;
 import com.jimmyatucla.betting.mappers.ContractMapper;
@@ -23,6 +24,12 @@ public class ContractController {
     @GetMapping
     public List<ContractDTO> getAllContracts() {
         List<ContractDTO> contracts = contractService.getAllContracts();
+        return contracts;
+    }
+
+    @GetMapping("/with-bids")
+    public List<ContractWithBidsDTO> getAllContractsWithBids() {
+        List<ContractWithBidsDTO> contracts = contractService.getAllContractsWithBids();
         return contracts;
     }
 

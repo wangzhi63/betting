@@ -1,49 +1,25 @@
-// package com.jimmyatucla.betting.services;Service
 
-// import com.jimmyatucla.betting.entities.*;
-// import com.jimmyatucla.betting.repositories.*;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Service;
-
-// import java.util.List;
-// import java.util.Optional;
-
-// @Service
-// public class ContractService {
-//     @Autowired
-//     private ContractRepository contractRepository;
-
-//     public List<Contract> findAll() {
-//         return contractRepository.findAll();
-//     }
-
-//     public Optional<Contract> findById(Long id) {
-//         return contractRepository.findById(id);
-//     }
-
-//     public Contract save(Contract contract) {
-//         return contractRepository.save(contract);
-//     }
-
-//     public void deleteById(Long id) {
-//         contractRepository.deleteById(id);
-//     }
-// }
 
 package com.jimmyatucla.betting.services;
 
 import com.jimmyatucla.betting.dtos.ContractDTO;
+import com.jimmyatucla.betting.dtos.ContractWithBidsDTO;
 import com.jimmyatucla.betting.entities.Contract;
 import com.jimmyatucla.betting.mappers.ContractMapper;
 import com.jimmyatucla.betting.repositories.ContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.sql.Date;
 
 @Service
 public class ContractService {
@@ -61,6 +37,29 @@ public class ContractService {
         return contracts.stream()
                 .map(contractMapper::contractToContractDTO)
                 .collect(Collectors.toList());
+    }
+
+  
+
+    public List<ContractWithBidsDTO> getAllContractsWithBids() {
+        List<Map<String, Object>> results = contractRepository.findAllContractsWithBids();
+        List<ContractWithBidsDTO> dtos = new ArrayList<>();
+
+        for (Map<String, Object> result : results) {
+            ContractWithBidsDTO dto = new ContractWithBidsDTO();
+            dto.setId(((Number) result.get("id")).longValue());
+            dto.setAssertionText((String) result.get("assertion_text"));
+
+            Date sqlDate = (Date) result.get("end_date");
+            LocalDate localDate = sqlDate.toLocalDate();
+            dto.setEndDate(localDate);
+
+            dto.setLongAmount((Double) result.get("long_amount"));
+            dto.setShortAmount((Double) result.get("short_amount"));
+            dtos.add(dto);
+        }
+
+        return dtos;
     }
 
     public ContractDTO getContractById(Long id) {

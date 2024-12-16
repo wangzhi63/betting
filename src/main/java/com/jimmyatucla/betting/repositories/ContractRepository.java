@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Long> {
@@ -42,5 +43,5 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
                    "    aggregated_bids a " +
                    "ON " +
                    "    a.contract_id = c.id", nativeQuery = true)
-    List<ContractWithBidsDTO> findAllContractsWithBids();
+    List<Map<String, Object>> findAllContractsWithBids();
 }
