@@ -25,7 +25,9 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
                    "    SELECT " +
                    "        b.contract_id, " +
                    "        SUM(b.amount) FILTER (WHERE b.action = 'long') AS long_amount, " +
-                   "        SUM(b.amount) FILTER (WHERE b.action = 'short') AS short_amount " +
+                   "        SUM(b.amount) FILTER (WHERE b.action = 'short') AS short_amount, " +
+                   "        COUNT(*) FILTER (WHERE b.action = 'long') AS long_count, " +
+                   "        COUNT(*) FILTER (WHERE b.action = 'short') AS short_count " +
                    "    FROM " +
                    "        bids b " +
                    "    GROUP BY " +
@@ -36,8 +38,10 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
                    "    c.assertion_text, " +
                    "    c.end_date, " + // Added field
                    "    a.long_amount, " +
-                   "    a.short_amount " +
-                   "FROM " +
+                   "    a.short_amount, " +
+                   "    a.long_count, " +
+                   "    a.short_count " +
+                   "    FROM " +
                    "    contracts c " +
                    "LEFT JOIN " +
                    "    aggregated_bids a " +

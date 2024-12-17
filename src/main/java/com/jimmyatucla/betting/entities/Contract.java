@@ -28,8 +28,11 @@ public class Contract {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @ManyToOne
-    @JoinColumn(name = "creator_id")
+    @Column(name = "creator_id", nullable = false)
+    private Long creatorId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id", insertable = false, updatable = false)
     private User creator;
 
     @OneToMany(mappedBy = "contract")
@@ -69,4 +72,7 @@ public class Contract {
     
         public LocalDate getEndDate() { return endDate; }
         public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+
+        public Long getCreatorId() { return creatorId; }
+        public void setCreatorId(Long creatorId) { this.creatorId = creatorId; }
 }

@@ -56,6 +56,8 @@ public class ContractService {
 
             dto.setLongAmount((Double) result.get("long_amount"));
             dto.setShortAmount((Double) result.get("short_amount"));
+            dto.setLongCount((Long) result.get("long_count"));
+            dto.setShortCount((Long) result.get("short_count"));
             dtos.add(dto);
         }
 

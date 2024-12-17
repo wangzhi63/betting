@@ -10,6 +10,7 @@ public class ContractDTO {
     private String assertionText;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Long creatorId;
 
     // Getters and Setters
     public Long getId() {
@@ -58,6 +59,14 @@ public class ContractDTO {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
     }
 
     @Override

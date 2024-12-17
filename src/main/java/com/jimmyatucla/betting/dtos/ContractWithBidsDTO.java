@@ -9,6 +9,8 @@ public class ContractWithBidsDTO {
     private LocalDate endDate; // Added field
     private Double longAmount;
     private Double shortAmount;
+    private Long longCount;
+    private Long shortCount;
 
     // Getters and Setters
     public Long getId() {
@@ -49,5 +51,22 @@ public class ContractWithBidsDTO {
 
     public void setShortAmount(Double shortAmount) {
         this.shortAmount = shortAmount;
+    }
+
+
+    public Long getLongCount() {
+        return longCount;
+    }
+
+    public void setLongCount(Long longCount) {
+        this.longCount = longCount;
+    }
+
+    public Long getShortCount() {
+        return shortCount;
+    }
+
+    public void setShortCount(Long shortCount) {
+        this.shortCount = shortCount;
     }
 }
