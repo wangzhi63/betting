@@ -34,6 +34,10 @@ public class Bid {
     @JoinColumn(name = "contract_id", insertable = false, updatable = false)
     private Contract contract;
 
+    @ManyToOne
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
+
     // Getters and Setters
     public Long getId() {
         return id;
@@ -81,5 +85,13 @@ public class Bid {
 
     public void setContractId(Long contractId) {
         this.contractId = contractId;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
     }
 }
