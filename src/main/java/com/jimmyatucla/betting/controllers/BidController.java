@@ -19,7 +19,8 @@ public class BidController {
 
     @PostMapping
     public ResponseEntity<BidDTO> createBid(@RequestBody BidDTO bidDTO) {
-        BidDTO createdBid = bidService.createBid(bidDTO);
+        // BidDTO createdBid = bidService.createBid(bidDTO);
+        BidDTO createdBid = bidService.placeBid(bidDTO);
         return new ResponseEntity<>(createdBid, HttpStatus.CREATED);
     }
 }

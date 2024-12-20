@@ -74,6 +74,7 @@ public class BidService {
         bid.setContractId(contractId);
         bid.setAmount(amount);
         bid.setTransaction(transaction);
+        bid.setCreatedAt(transaction.getCreatedAt());
         bid.setAction(action);
         Bid savedBid = bidRepository.save(bid);
 
