@@ -17,6 +17,9 @@ public class Resolution {
     @Column(nullable = false)
     private String decision;
 
+    @Column(name="status")
+    private String status;
+
     @Column(name = "resolved_at", nullable = false, updatable = false)
     private LocalDateTime resolvedAt;
 
