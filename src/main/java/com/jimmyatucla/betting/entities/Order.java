@@ -11,16 +11,25 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "contract_id", nullable = false)
+    private Long contractId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contract_id", nullable = false)
+    @JoinColumn(name = "contract_id", insertable = false, updatable = false)
     private Contract contract;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id", nullable = false)
-    private User seller;
+    @Column(name = "seller_id", nullable = false)
+    private Long sellerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "buyer_id", nullable = false)
+    @JoinColumn(name = "seller_id", insertable = false, updatable = false)
+    private User seller;
+
+    @Column(name = "buyer_id", nullable = false)
+    private Long buyerId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "buyer_id", insertable = false, updatable = false)
     private User buyer;
 
     @Column(nullable = false, precision = 19, scale = 4)
@@ -33,8 +42,11 @@ public class Order {
     @Column(nullable = false)
     private OrderStatus status;
 
+    @Column(name = "created_by", nullable = false)
+    private Long createdById;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", nullable = false)
+    @JoinColumn(name = "created_by", insertable = false, updatable = false)
     private User createdBy;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -59,12 +71,28 @@ public class Order {
         this.id = id;
     }
 
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
+
     public Contract getContract() {
         return contract;
     }
 
     public void setContract(Contract contract) {
         this.contract = contract;
+    }
+
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
     }
 
     public User getSeller() {
@@ -77,6 +105,14 @@ public class Order {
 
     public User getBuyer() {
         return buyer;
+    }
+
+    public Long getBuyerId() {
+        return buyerId;
+    }
+
+    public void setBuyerId(Long buyerId) {
+        this.buyerId = buyerId;
     }
 
     public void setBuyer(User buyer) {
@@ -105,6 +141,14 @@ public class Order {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public Long getCreatedById() {
+        return createdById;
+    }
+
+    public void setCreatedById(Long createdById) {
+        this.createdById = createdById;
     }
 
     public User getCreatedBy() {

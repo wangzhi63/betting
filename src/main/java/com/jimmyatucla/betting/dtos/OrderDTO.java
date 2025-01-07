@@ -12,7 +12,7 @@ public class OrderDTO {
     private BigDecimal price;
     private Integer quantity;
     private String status;
-    private Long createdBy;
+    private Long createdById;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -73,12 +73,12 @@ public class OrderDTO {
         this.status = status;
     }
 
-    public Long getCreatedBy() {
-        return createdBy;
+    public Long getCreatedById() {
+        return createdById;
     }
 
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
+    public void setCreatedById(Long createdBy) {
+        this.createdById = createdBy;
     }
 
     public LocalDateTime getCreatedAt() {
