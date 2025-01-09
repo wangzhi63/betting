@@ -18,13 +18,13 @@ public class OrderMapper {
 
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setId(order.getId());
-        orderDTO.setContractId(order.getContract().getId());
-        orderDTO.setSellerId(order.getSeller().getId());
-        orderDTO.setBuyerId(order.getBuyer().getId());
+        orderDTO.setContractId(order.getContractId());
+        orderDTO.setSellerId(order.getSellerId());
+        orderDTO.setBuyerId(order.getBuyerId());
         orderDTO.setPrice(order.getPrice());
         orderDTO.setQuantity(order.getQuantity());
         orderDTO.setStatus(order.getStatus().name());
-        orderDTO.setCreatedById(order.getCreatedBy().getId());
+        orderDTO.setCreatedById(order.getCreatedById());
         orderDTO.setCreatedAt(order.getCreatedAt());
         orderDTO.setUpdatedAt(order.getUpdatedAt());
 
@@ -37,7 +37,9 @@ public class OrderMapper {
         }
 
         Order order = new Order();
-        order.setId(orderDTO.getId());
+        if(orderDTO.getId() != null) {
+          order.setId(orderDTO.getId());
+        }
         order.setContractId(orderDTO.getContractId());
         order.setSellerId(orderDTO.getSellerId());
         order.setBuyerId(orderDTO.getBuyerId());

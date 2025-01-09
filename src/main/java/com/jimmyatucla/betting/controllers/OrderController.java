@@ -11,7 +11,7 @@ import com.jimmyatucla.betting.services.OrderService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 public class OrderController {
 
     @Autowired
