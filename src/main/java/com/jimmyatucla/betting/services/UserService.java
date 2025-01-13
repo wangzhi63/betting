@@ -1,6 +1,8 @@
 package com.jimmyatucla.betting.services;
 
+import com.jimmyatucla.betting.dtos.UserDTO;
 import com.jimmyatucla.betting.entities.*;
+import com.jimmyatucla.betting.mappers.UserMapper;
 import com.jimmyatucla.betting.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,11 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    public List<UserDTO> fetchAll() {
+       List<User> users = userRepository.findAll();
+        return UserMapper.toUserDTOList(users);
+    }
 
     public List<User> findAll() {
         return userRepository.findAll();

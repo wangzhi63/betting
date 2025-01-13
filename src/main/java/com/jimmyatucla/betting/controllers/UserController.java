@@ -3,6 +3,7 @@
 package com.jimmyatucla.betting.controllers;
 
 import com.jimmyatucla.betting.entities.User;
+import com.jimmyatucla.betting.dtos.UserDTO;
 import com.jimmyatucla.betting.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.findAll();
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.fetchAll();
         return ResponseEntity.ok(users);
     }
 
