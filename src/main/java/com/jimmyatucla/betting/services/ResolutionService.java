@@ -25,6 +25,10 @@ public class ResolutionService {
         return resolutionRepository.save(resolution);
     }
 
+    public Resolution update(Resolution resolution) {
+        return resolutionRepository.save(resolution);
+    }  
+
     public void deleteById(Long id) {
         resolutionRepository.deleteById(id);
     }
