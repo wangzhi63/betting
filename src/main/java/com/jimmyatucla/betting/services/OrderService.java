@@ -59,14 +59,14 @@ public class OrderService {
             sellerBitDTO.setUserId(order.getSellerId());
             sellerBitDTO.setAmount((100.00 - order.getPrice().doubleValue()) * order.getQuantity());
             sellerBitDTO.setContractId(order.getContractId());
-            sellerBitDTO.setAction("long");
+            sellerBitDTO.setAction("short");
             bidService.placeBid(sellerBitDTO);
 
             BidDTO buyerBitDTO = new BidDTO();
             buyerBitDTO.setUserId(order.getBuyerId());
             buyerBitDTO.setAmount((order.getPrice().doubleValue()) * order.getQuantity());
             buyerBitDTO.setContractId(order.getContractId());
-            buyerBitDTO.setAction("short");
+            buyerBitDTO.setAction("long");
             bidService.placeBid(buyerBitDTO);
 
         }

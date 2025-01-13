@@ -5,10 +5,14 @@ package com.jimmyatucla.betting.services;
 import com.jimmyatucla.betting.dtos.ContractDTO;
 import com.jimmyatucla.betting.dtos.ContractWithBidsDTO;
 import com.jimmyatucla.betting.entities.Contract;
+import com.jimmyatucla.betting.entities.Resolution;
 import com.jimmyatucla.betting.mappers.ContractMapper;
 import com.jimmyatucla.betting.repositories.ContractRepository;
+import com.jimmyatucla.betting.repositories.ResolutionRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,12 +29,16 @@ import java.sql.Date;
 public class ContractService {
 
     private static final Logger logger = LogManager.getLogger(ContractService.class);
+    private static final Long DEFAULT_JUDGE_ID = 1L;
 
     @Autowired
     private ContractRepository contractRepository;
 
     @Autowired
     private ContractMapper contractMapper;
+
+    @Autowired
+    private ResolutionRepository resolutionRepository;
 
     public List<ContractDTO> getAllContracts() {
         List<Contract> contracts = contractRepository.findAll();
@@ -70,6 +78,7 @@ public class ContractService {
         return contractMapper.contractToContractDTO(contract);
     }
 
+    @Transactional
     public ContractDTO createContract(ContractDTO contractDTO) {
         System.out.println("Converting ContractDTO to Contract: " + contractDTO);
         logger.debug("Converting ContractDTO to Contract: {}", contractDTO);
@@ -78,6 +87,14 @@ public class ContractService {
         System.out.println("Converted Contract: " + contract);
         logger.debug("Converted Contract: {}", contract);
         Contract savedContract = contractRepository.save(contract);
+
+        Resolution resolution = new Resolution();
+        resolution.setContractId(savedContract.getId());
+        resolution.setStatus("pending");
+        resolution.setResolvedById(DEFAULT_JUDGE_ID);
+        resolution.setDecision("undecided");
+        Resolution savedResolution = resolutionRepository.save(resolution);
+
         return contractMapper.contractToContractDTO(savedContract);
     }
 
