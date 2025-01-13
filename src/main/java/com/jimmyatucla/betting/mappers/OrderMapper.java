@@ -28,6 +28,18 @@ public class OrderMapper {
         orderDTO.setCreatedAt(order.getCreatedAt());
         orderDTO.setUpdatedAt(order.getUpdatedAt());
 
+        if(order.getContract() != null){
+            orderDTO.setAssertionText(order.getContract().getAssertionText());
+        }
+
+        if(order.getBuyer() != null){
+            orderDTO.setBuyerName(order.getBuyer().getUsername());
+        }
+
+        if(order.getSeller() != null){
+            orderDTO.setSellerName(order.getSeller().getUsername());
+        }      
+
         return orderDTO;
     }
 

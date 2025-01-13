@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jimmyatucla.betting.dtos.BidDTO;
 import com.jimmyatucla.betting.dtos.OrderDTO;
+import com.jimmyatucla.betting.entities.Bid;
 import com.jimmyatucla.betting.entities.Order;
 import com.jimmyatucla.betting.entities.Order.OrderStatus;
 import com.jimmyatucla.betting.mappers.OrderMapper;
@@ -12,6 +14,8 @@ import com.jimmyatucla.betting.repositories.OrderRepository;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.jimmyatucla.betting.exceptions.OrderNotFoundException;
 
 @Service
 @Transactional
@@ -22,6 +26,9 @@ public class OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private BidService bidService;
 
     public List<OrderDTO> findAll() {
         List<Order> orders = orderRepository.findAll();
@@ -39,6 +46,30 @@ public class OrderService {
         Order order = orderMapper.toEntity(orderDTO);
         order = orderRepository.save(order);
         return orderMapper.toDto(order);
+    }
+
+    @Transactional
+    public void updateOrderStatus(Long orderId, String status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with id " + orderId));
+        order.setStatus(OrderStatus.valueOf(status));
+        orderRepository.save(order);
+        if(status.equals("ACCEPTED")) {
+            BidDTO sellerBitDTO = new BidDTO();
+            sellerBitDTO.setUserId(order.getSellerId());
+            sellerBitDTO.setAmount((100.00 - order.getPrice().doubleValue()) * order.getQuantity());
+            sellerBitDTO.setContractId(order.getContractId());
+            sellerBitDTO.setAction("long");
+            bidService.placeBid(sellerBitDTO);
+
+            BidDTO buyerBitDTO = new BidDTO();
+            buyerBitDTO.setUserId(order.getBuyerId());
+            buyerBitDTO.setAmount((order.getPrice().doubleValue()) * order.getQuantity());
+            buyerBitDTO.setContractId(order.getContractId());
+            buyerBitDTO.setAction("short");
+            bidService.placeBid(buyerBitDTO);
+
+        }
     }
 
     public void deleteById(Long id) {

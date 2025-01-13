@@ -58,6 +58,7 @@ public class Order {
     public enum OrderStatus {
         PENDING,
         ACCEPTED,
+        REJECTED,
         TRADING,
         TRANSACTED
     }

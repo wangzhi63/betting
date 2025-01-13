@@ -15,6 +15,9 @@ public class OrderDTO {
     private Long createdById;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String assertionText;
+    private String sellerName;
+    private String buyerName;
 
     // Getters and Setters
     public Long getId() {
@@ -96,4 +99,28 @@ public class OrderDTO {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public String getAssertionText() {
+        return assertionText;
+    }
+
+    public void setAssertionText(String assertionText) {
+        this.assertionText = assertionText;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
+    public String getBuyerName() {
+        return buyerName;
+    }   
+
+    public  void setBuyerName(String buyerName) {
+        this.buyerName = buyerName;
+    }   
 }

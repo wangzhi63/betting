@@ -40,4 +40,10 @@ public class OrderController {
         List<OrderDTO> orders = orderService.findByBuyerId(buyerId);
         return ResponseEntity.ok(orders);
     }
+
+    @PatchMapping("/updateStatus/{orderId}")
+    public ResponseEntity<Void> updateOrderStatus(@PathVariable Long orderId, @RequestBody String status) {
+        orderService.updateOrderStatus(orderId, status);
+        return ResponseEntity.ok().build();
+    }
 }
