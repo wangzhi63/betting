@@ -18,7 +18,7 @@ public class ResolutionService {
     private ResolutionRepository resolutionRepository;
 
      public List<ResolutionDTO> getPendingResolutions() {
-        List<Resolution> pendingResolutions = resolutionRepository.findByStatus("PENDING");
+        List<Resolution> pendingResolutions = resolutionRepository.findByStatus("pending");
         return pendingResolutions.stream()
                 .map(ResolutionMapper::toResolutionDTO)
                 .collect(Collectors.toList());
@@ -28,7 +28,7 @@ public class ResolutionService {
         Resolution resolution = resolutionRepository.findById(id)
                 .orElseThrow(() -> new ResolutionNotFoundException("Resolution not found with id " + id));
         resolution.setDecision(decision);
-        resolution.setStatus("DECIDED");
+        resolution.setStatus("resolved");
         resolutionRepository.save(resolution);
         return ResolutionMapper.toResolutionDTO(resolution);
     }

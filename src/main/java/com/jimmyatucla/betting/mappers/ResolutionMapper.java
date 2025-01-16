@@ -11,6 +11,9 @@ public class ResolutionMapper {
         dto.setContractId(resolution.getContractId());
         dto.setStatus(resolution.getStatus());
         dto.setDecision(resolution.getDecision());
+        dto.setAssertionText(resolution.getContract().getAssertionText());
+        dto.setEndDate(resolution.getContract().getEndDate());
+        dto.setCreatorName(resolution.getContract().getCreator().getUsername());
         return dto;
     }
 

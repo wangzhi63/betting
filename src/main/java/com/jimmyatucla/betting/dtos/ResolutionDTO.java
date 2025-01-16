@@ -1,11 +1,16 @@
 package com.jimmyatucla.betting.dtos;
 
+import java.time.LocalDate;
+
 public class ResolutionDTO {
 
     private Long id;
     private Long contractId;
+    private String assertionText;
     private String status;
     private String decision;
+    private LocalDate endDate;
+    private String CreatorName;
 
     // Getters and Setters
     public Long getId() {
@@ -38,5 +43,28 @@ public class ResolutionDTO {
 
     public void setDecision(String decision) {
         this.decision = decision;
+    }
+
+    public String getAssertionText() {
+        return assertionText;
+    }
+
+    public void setAssertionText(String assertionText) {
+        this.assertionText = assertionText;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+  
+    public String getCreatorName() {
+        return CreatorName;
+    }
+    public void setCreatorName(String CreatorName) {
+        this.CreatorName = CreatorName;
     }
 }

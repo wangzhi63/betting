@@ -22,9 +22,9 @@ public class ResolutionController {
         return ResponseEntity.ok(pendingResolutions);
     }
 
-    @PutMapping("/{id}/decision")
-    public ResponseEntity<ResolutionDTO> updateDecision(@PathVariable Long id, @RequestBody String decisionDTO) {
-        ResolutionDTO updatedResolution = resolutionService.updateDecision(id, decisionDTO);
+    @PutMapping("/decision/{id}")
+    public ResponseEntity<ResolutionDTO> updateDecision(@PathVariable Long id, @RequestBody String decision) {
+        ResolutionDTO updatedResolution = resolutionService.updateDecision(id, decision);
         return ResponseEntity.ok(updatedResolution);
     }
 }

@@ -47,7 +47,12 @@ public class Resolution {
     public Long getContractId() {
         return contractId;
     }
-
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }   
+    public Contract getContract() {
+        return contract;
+    }  
     public void setStatus(String status) {
         this.status = status;
     }  

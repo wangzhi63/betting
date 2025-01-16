@@ -75,4 +75,6 @@ public class Contract {
 
         public Long getCreatorId() { return creatorId; }
         public void setCreatorId(Long creatorId) { this.creatorId = creatorId; }
+
+        public User getCreator() { return creator; }    
 }
