@@ -2,6 +2,7 @@ package com.jimmyatucla.betting.services;
 
 import com.jimmyatucla.betting.dtos.UserDTO;
 import com.jimmyatucla.betting.entities.*;
+import com.jimmyatucla.betting.exceptions.ResourceNotFoundException;
 import com.jimmyatucla.betting.mappers.UserMapper;
 import com.jimmyatucla.betting.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public UserDTO findById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        User user = userOptional.orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
+
+        return UserMapper.toUserDTO(user);
     }
 
     public User save(User user) {

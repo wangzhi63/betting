@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jimmyatucla.betting.dtos.WalletDTO;
 import com.jimmyatucla.betting.entities.Transaction;
 import com.jimmyatucla.betting.entities.Wallet;
+import com.jimmyatucla.betting.mappers.WalletMapper;
 import com.jimmyatucla.betting.repositories.TransactionRepository;
 import com.jimmyatucla.betting.repositories.WalletRepository;
 
@@ -19,8 +21,11 @@ public class WalletService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public Wallet findByUserId(Long userId) {
-        return walletRepository.findByUserId(userId);
+    @Autowired
+    private WalletMapper WalletMapper;
+
+    public WalletDTO findByUserId(Long userId) {
+        return WalletMapper.toWalletDTO(walletRepository.findByUserId(userId));
     }
     public Wallet save(Wallet wallet) {
         return walletRepository.save(wallet);

@@ -4,6 +4,7 @@ package com.jimmyatucla.betting.controllers;
 
 import com.jimmyatucla.betting.entities.User;
 import com.jimmyatucla.betting.dtos.UserDTO;
+import com.jimmyatucla.betting.dtos.WalletDTO;
 import com.jimmyatucla.betting.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,17 +33,16 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.findById(id);
-        return user.map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        UserDTO user = userService.findById(id);
+        return ResponseEntity.ok(user);
     }
 
 
     @PostMapping
     public ResponseEntity<User> createOrUpdateUser(@RequestBody User user) {
         User savedUser = userService.save(user);
-        Wallet wallet = walletService.findByUserId(savedUser.getId());
+        WalletDTO wallet = walletService.findByUserId(savedUser.getId());
         if (wallet == null) {
             Wallet newWallet = new Wallet();
             newWallet.setUserId(savedUser.getId());

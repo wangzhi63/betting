@@ -7,6 +7,7 @@ import com.jimmyatucla.betting.entities.Contract;
 import org.mapstruct.Mapper;
 // import org.mapstruct.factory.Mappers;
 // import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
 // @Mapper(componentModel = "spring")
 // public interface ContractMapper {
@@ -30,7 +31,9 @@ import org.mapstruct.Mapper;
 //     Contract contractDTOToContract(ContractDTO contractDTO);
 // }
 
-@Mapper(componentModel = "spring")
+// @Mapper(componentModel = "spring")
+
+@Component
 public class ContractMapper {
 
     // Method to map from Contract to ContractDTO
