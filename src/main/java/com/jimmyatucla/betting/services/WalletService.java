@@ -19,6 +19,13 @@ public class WalletService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    public Wallet findByUserId(Long userId) {
+        return walletRepository.findByUserId(userId);
+    }
+    public Wallet save(Wallet wallet) {
+        return walletRepository.save(wallet);
+    }
+
     @Transactional
     public void addAmount(Long userId, Double amount, String description) {
         Wallet wallet = walletRepository.findByUserId(userId);

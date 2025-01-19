@@ -17,6 +17,9 @@ public class ResolutionService {
     @Autowired
     private ResolutionRepository resolutionRepository;
 
+    @Autowired
+    private OrderService orderService;
+
      public List<ResolutionDTO> getPendingResolutions() {
         List<Resolution> pendingResolutions = resolutionRepository.findByStatus("pending");
         return pendingResolutions.stream()
@@ -30,7 +33,11 @@ public class ResolutionService {
         resolution.setDecision(decision);
         resolution.setStatus("resolved");
         resolutionRepository.save(resolution);
-        return ResolutionMapper.toResolutionDTO(resolution);
+        ResolutionDTO resolutionDTO =  ResolutionMapper.toResolutionDTO(resolution);
+        if(!decision.equals("aborted")) {
+           orderService.settleOrdersForResolution(resolutionDTO);
+        }
+        return resolutionDTO;
     }
 
     public List<Resolution> findAll() {

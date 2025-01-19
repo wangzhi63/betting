@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jimmyatucla.betting.dtos.BidDTO;
 import com.jimmyatucla.betting.dtos.OrderDTO;
+import com.jimmyatucla.betting.dtos.ResolutionDTO;
 import com.jimmyatucla.betting.entities.Bid;
 import com.jimmyatucla.betting.entities.Order;
 import com.jimmyatucla.betting.entities.Order.OrderStatus;
@@ -29,6 +30,9 @@ public class OrderService {
 
     @Autowired
     private BidService bidService;
+
+    @Autowired
+    private WalletService walletService;
 
     public List<OrderDTO> findAll() {
         List<Order> orders = orderRepository.findAll();
@@ -72,6 +76,34 @@ public class OrderService {
         }
     }
 
+    public void settleOrdersForResolution(ResolutionDTO resolutionDTO) {
+        Long contractId = resolutionDTO.getContractId();
+        List<Order> orders = orderRepository.findByContractIdAndStatus(contractId, OrderStatus.ACCEPTED);
+        for (Order order : orders) {
+           settleOrder(order.getId(), resolutionDTO);
+        }
+    }
+    
+    @Transactional
+    public void settleOrder(Long orderId, ResolutionDTO resolutionDTO) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with id " + orderId));
+        order.setStatus(OrderStatus.TRANSACTED);
+        orderRepository.save(order);
+
+        String decision = resolutionDTO.getDecision();
+        Long winnerId;
+        if(decision.equals("true")){
+          winnerId = order.getBuyerId();
+        } else {
+            winnerId = order.getSellerId();
+        }
+        Double amount = (double) (100L*order.getQuantity());
+
+        walletService.addAmount(winnerId, amount, "winning order " + orderId);
+
+
+    }
     public void deleteById(Long id) {
         orderRepository.deleteById(id);
     }
