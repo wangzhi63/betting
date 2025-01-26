@@ -1,0 +1,95 @@
+#docker compose yaml file version
+version: '3'
+
+#define the services
+services:
+  # #define the service name
+  activemq:
+    #define the image to use
+    image: symptoma/activemq:latest
+    #define the ports to expose
+    #use network mode bridge
+    # network_mode: bridge
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+    networks:
+      - ic  
+    #define the restart policy
+    restart: always
+# # ic datezone
+  datazone:
+    image: tomcat8-ic-datazone-1
+    # network_mode: bridge
+    ports:
+      - "8080:8080"
+      - "8001:8000"
+    volumes:
+      - .:/usr/local/tomcat/resources
+    networks:
+      - ic  
+    restart: always
+# # naas api zone 
+#   naasapizone:
+#     image: naas-api-zhi 
+#     # network_mode: bridge
+#     ports:
+#       - "9091:8080"
+#     volumes:
+#       - .:/usr/local/tomcat/resources
+#     networks:
+#       - ic  
+#     restart: always
+# # naas scheduler zone 
+#   naasschedulerzone:
+#     image: naas-scheduler 
+#     # network_mode: bridge
+#     ports:
+#       - "9093:9093"
+#     volumes:
+#       - .:/usr/local/tomcat/resources
+#     networks:
+#       - ic  
+#     restart: always
+
+# # idm mockup 
+  # idmzone:
+  #   image: idmmock
+  #   ports:
+  #     - 16040:16040
+  #   networks:
+  #     - ic
+  #   environment:
+  #     NODE_ENV: production
+  #     SERVER_PORT: 16040
+  #     JWT_SECRET: 0a6b944d-d2fb-46fc-a85e-0295c986cd9f
+  #     MONGO_HOST: mongodb://mongo/zhidb
+  #   restart: always
+  #   depends_on:
+  #     - mongo-seed
+
+  # mongo:
+  #   image: zhi_mongodb
+  #   ports:
+  #     - 27017:27017 
+  #   networks:
+  #       - ic
+  # mongo-seed:
+  #   image: mongo
+  #   depends_on:
+  #     - mongo
+  #   volumes:
+  #     - ./dump:/home/dump
+  #     - ./mongo-seed.sh:/home/mongo-seed.sh
+  #   command: ["bash", "/home/mongo-seed.sh"]
+  #   networks:
+  #       - ic
+networks:
+  ic:
+    driver: bridge
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+#docker compose yaml file version
+version: '3'
+
+#define the services
+services:
+  # #define the service name
+# # naas api zone 
+   naasapizone:
+     image: betting 
+     # network_mode: bridge
+     ports:
+       - "9091:8080"
+     volumes:
+       - .:/usr/local/tomcat/resources
+     networks:
+       - ic  
+     restart: always
+networks:
+  ic:
+    driver: bridge
+
+
+
+
+
+
